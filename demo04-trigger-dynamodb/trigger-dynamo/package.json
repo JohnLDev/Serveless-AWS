@@ -1,0 +1,23 @@
+{  
+  "name": "trigger-dynamo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "invoke-local":"sls invoke local -f heroes-insert --path requests-mock/hero.insert.json",
+    "invoke":"sls invoke -f heroes-insert --path requests-mock/hero.insert.json",
+    "invoke-trigger": "sls invoke local -f heroes-trigger --path requests-mock/hero.trigger.json"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "aws-sdk": "^2.987.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1"
+  }
+
+}

@@ -1,0 +1,40 @@
+{
+  "Records": [
+    {
+      "eventID": "a5461f71c169cabf228005021e54f149",
+      "eventName": "INSERT",
+      "eventVersion": "1.1",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "us-east-1",
+      "dynamodb": {
+        "ApproximateCreationDateTime": 1631466770,
+        "Keys": {
+          "nome": {
+            "S": "Test"
+          },
+          "id": {
+            "S": "a88e9950-13ec-11ec-8858-a926cfad92e7"
+          }
+        },
+        "NewImage": {
+          "createdAt": {
+            "S": "2021-09-12T17:12:50.278Z"
+          },
+          "nome": {
+            "S": "Test"
+          },
+          "id": {
+            "S": "a88e9950-13ec-11ec-8858-a926cfad92e7"
+          },
+          "poder": {
+            "S": "Testar"
+          }
+        },
+        "SequenceNumber": "300600000000017279008275",
+        "SizeBytes": 136,
+        "StreamViewType": "NEW_AND_OLD_IMAGES"
+      },
+      "eventSourceARN": "arn:aws:dynamodb:us-east-1:851996801877:table/Heroes/stream/2021-09-12T17:07:53.070"
+    }
+  ]
+}
