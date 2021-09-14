@@ -1,0 +1,101 @@
+service: graphql-dynamo-pt1
+
+frameworkVersion: '2'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  region:  us-east-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    HEROES_TABLE: Heroes
+    SKILLS_TABLE: Skills
+    LOCALSTACK_HOST: ${env:LOCALSTACK_HOST, "localhost"}
+    LOCALSTACK_PORT: ${env:LOCALSTACK_PORT, "4566"}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: 
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:DescribeTable
+      Resource:
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.HEROES_TABLE}"
+        - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.SKILLS_TABLE}"
+        
+package:
+  excludeDevDependencies: true
+  individually: true
+
+plugins:
+  - serverless-dynamodb-local 
+  - serverless-offline
+
+custom:
+  dynamodb:
+    stages: 
+      - ${self:provider.stage}
+    start:
+      host: ${self:provider.environment.LOCALSTACK_HOST}
+      port: ${self:provider.environment.LOCALSTACK_PORT}
+      migrate: true
+      noStart: true
+      seed: true
+    seed:
+      heroes:
+        sources:
+          - table: ${self:provider.environment.HEROES_TABLE}
+            sources: ['./seeds/heroes.json']
+      skills:
+        sources:
+          - table: ${self:provider.environment.SKILLS_TABLE}
+            sources: ['./seeds/skills.json']
+         
+
+
+functions:
+  hello:
+    handler: src/index.hello
+    events:
+      - http:
+          path: hello  
+          method: any
+  graphql:
+    handler: src/index.graphqlHandler
+    events:
+      - http:
+          path: graphql
+          method: any
+
+
+resources:
+  Resources:
+    Heroes:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.HEROES_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    Skills:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.SKILLS_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

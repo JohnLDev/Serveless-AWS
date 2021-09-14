@@ -1,0 +1,29 @@
+{
+  "name": "graphql-dynamo-pt1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "IS_LOCAL=true npx nodemon --exec npm run offline",
+    "test": "sls invoke test --path test",
+    "offline": "npx sls offline start --host 0.0.0.0"
+  },
+  "dependencies": {
+    "apollo-server-lambda": "^3.3.0",
+    "aws-sdk": "^2.988.0",
+    "dynamoose": "^2.8.1",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "graphql": "^15.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "serverless": "^2.58.0",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-localstack": "^0.4.34",
+    "serverless-offline": "^8.1.0"
+  }
+}
