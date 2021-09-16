@@ -10,12 +10,11 @@ const schema = new dynamoose.Schema({
     type: String,
     required: true
   },
-  skills: {
-    type: Array,
-    schema: [String],
+  value: {
+    type: Number,
     required: true
   }
 })
 
-const model = dynamoose.model(process.env.HEROES_TABLE, schema)
+const model = dynamoose.model(process.env.SKILLS_TABLE, schema)
 module.exports = model

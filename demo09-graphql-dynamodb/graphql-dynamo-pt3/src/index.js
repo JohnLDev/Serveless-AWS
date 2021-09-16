@@ -1,28 +1,28 @@
 'use strict'
-const { ApolloServer, gql } = require('apollo-server-lambda')
+const { ApolloServer } = require('apollo-server-lambda')
 const setupDynamoDBClient = require('./core/utils/setupDynamoDb')
 setupDynamoDBClient()
 
 const HeroFactory = require('./core/factories/heroFactory')
 const SkillFactory = require('./core/factories/skillFactory')
-
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!'
-  }
-}
+const schema = require('./graphql')
+const isLocal = process.env.IS_LOCAL
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers
+  schema,
+  introspection: isLocal,
+  context: async () => ({
+    Hero: await HeroFactory.createInstance(),
+    Skill: await SkillFactory.createInstance()
+  }),
+  formatError: (error) => {
+    console.log('[Global error logger]', error)
+    return error
+  },
+  formatResponse: (response) => {
+    console.log('[Global logger]', response)
+    return response
+  }
 })
 
 exports.graphqlHandler = server.createHandler()
