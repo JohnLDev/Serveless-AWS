@@ -1,0 +1,24 @@
+{
+  "name": "auth-sls",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "IS_LOCAL=true npx nodemon --exec npm run offline",
+    "test": "sls invoke test --path test",
+    "offline": "npx sls offline start --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "nodemon": "^2.0.12",
+    "serverless": "^2.59.0",
+    "serverless-offline": "^8.2.0"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
+}
