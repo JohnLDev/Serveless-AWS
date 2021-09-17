@@ -1,2 +1,4 @@
 credentials.csv
 demo06-layers
+/node_modules
+.env

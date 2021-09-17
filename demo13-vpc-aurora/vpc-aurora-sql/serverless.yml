@@ -1,0 +1,30 @@
+service: vpc-aurora-sql
+
+frameworkVersion: '2'
+
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  environment:
+      MYSQL_ROOT_PASSWORD: docker 
+      MYSQL_USER: root
+      MYSQL_PASSWORD: docker
+      MYSQL_HOST: localhost
+      MYSQL_DATABASE: vpc
+      
+  
+plugins:
+  - serverless-offline
+
+functions:
+  hello:
+    handler: src/index.handler
+    events:
+     - http:
+        method: any
+        path: hello
+
+package:
+  excludeDevDependencies: true

@@ -1,0 +1,21 @@
+{
+  "name": "vpc-aurora-sql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx nodemon --exec npm run offline",
+    "offline": "npx sls offline start --httpPort 3333"
+  },
+  "devDependencies": {
+    "@types/sequelize": "^4.28.10",
+    "nodemon": "^2.0.12",
+    "serverless": "^2.59.0",
+    "serverless-offline": "^8.2.0"
+  },
+  "dependencies": {
+    "faker": "^5.5.3",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5"
+  }
+}
